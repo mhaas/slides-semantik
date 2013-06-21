@@ -64,6 +64,160 @@
 \end{itemize}
 \end{frame}
 
+\begin{frame}{Foundations: Plausibility: Psychological}
+\begin{itemize}
+\item Working memory: represented by neural state vector %TODO: look up working memory - baddeley, 2003%
+\item Matrices support memory operations: storage, deletion, copy
+\item $\to$ Anaphora resolution
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Foundations: Vector Space Models}
+CMSM encode Vector Space models
+\begin{itemize}
+\item Represent vector composition operation $\bowtie$ as matrix multiplication between mapped vectors
+\item Map vectors into matrix space: $\psi_{\bowtie} \mathbb{R}^{n} \to \mathbb{R}^{n'\times n'} $
+$$ v_{1} \bowtie \ldots \bowtie v_{k} = \psi_{\bowtie}^{-1}(\psi_{\bowtie}(v_{1}) \ldots \psi_{\bowtie}(v_{k}) )$$
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Foundations: VSM: Vector Addition}
+\begin{itemize}
+\item Basic model for semantic composition: composite meaning calculated by token addition $v_{w} = \sum_{i=1}^{k}v_{\sigma_{i}}$
+% Where is the citation for that?
+\item Map vectors into matrix space
+$$  \psi_{+}(v_{\sigma}) =
+\left( \begin{array}{ccc|c}
+1 & \cdots & 0 & 0 \\
+\vdots & \ddots & & \vdots \\
+0 &  & 1 & 0 \\ \hline
+&  v_{\sigma} & & 1 \end{array} \right) $$
+\item So that $\psi_{+}^{-1} (\psi_{+}(v_{\sigma_{1}}) \ldots \psi_{+}(v_{\sigma_{k}})) = v_{\sigma_{1}} + \ldots + v_{\sigma_{k}}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Foundations: VSM: Vector Addition: Example}
+\begin{itemize}
+\item $w = v_{\sigma_{1}}v_{\sigma_{2}}$
+\item $v_{\sigma_{1}} = (2,5)$, $v_{\sigma_{2}} = (3,1)$
+\item Plug into $v_{w} = \sum_{i=1}^{k}v_{\sigma_{i}}$
+\item $v_{w} = (2,5)+(3,1) = (5,6)$
+\item $\psi_{+}(v_{1}) = \left( \begin{array}{cc|c}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+2 & 5 & 1 \end{array} \right) $
+\item  $\psi_{+}(v_{2}) = \left( \begin{array}{cc|c}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+3 & 1 & 1 \end{array} \right) $
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Foundations: VSM: Vector Addition: Example}
+\begin{itemize}
+\item $v_{\sigma_{1}} = (2,5)$, $v_{\sigma_{2}} = (3,1)$
+\item $\psi_{+}(v_{\sigma_{1}}) = \left( \begin{array}{cc|c}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+2 & 5 & 1 \end{array} \right) $
+\item  $\psi_{+}(v_{\sigma_{2}}) = \left( \begin{array}{cc|c}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+3 & 1 & 1 \end{array} \right) $
+
+$$ \psi_{+}(v_{\sigma_{1}}) \psi_{+}(v_{\sigma_{2}}) = 
+\left( \begin{array}{cc|c}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+5 & 6 & 1 \end{array} \right)
+$$
+% 5 = A_31 * B_11 + A_32 + B_21 (=0)  +  A_33*B_31
+% 6 = A_31 * B_12 (= 0) + A_32 * B_22 + A_33 * B_33
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Foundations: VSM: Component-Wise Multiplication}
+\begin{itemize}
+\item CMSM can simulate Hadamard product
+% Where is the citation here?
+\item Hadamard product: component-wise multiplication
+\item Hadamard product $\neq$ cross-product
+\item $(A \bullet B)_{ij} = A_{ij} * B_{ij}$
+\item Use different encoding function for vectors!
+$$  \psi_{\bullet}(v_{\sigma}) =
+\left( \begin{array}{cccc}
+v_{\sigma}(1) & 0 & 0 & 0 \\
+0 & v_{\sigma}(2) & 0 & 0 \\
+0 & 0 & \ddots & 0 \\
+0 & 0 & 0 & v_{\sigma}(n) \end{array} \right) $$
+
+\item So that $\psi_{+}^{-1} (\psi_{+}(v_{\sigma_{1}}) \ldots \psi_{+}(v_{\sigma_{k}})) = v_{\sigma_{1}} \bullet \ldots \bullet v_{\sigma_{k}}$
+
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Foundations: VSM: Circular Convolution Product}
+\begin{itemize}
+\item CMSM can simulate Circular Convolution Product 
+\item $v_{3}(i+1) = \sum_{k=0}^{n-1}{v_{1} (k+1) * v_{2} ( (i-k \bmod{n}) +1) }$
+\item Encoding function:
+$$  M(i,j) = v ((j - i \bmod{n} ) +1) $$
+\item Encoded matrix:
+
+$$\psi_{ \circledast } ( v(1), v(2), v(3) ) =
+\left( \begin{array}{ccc}
+v(1) & v(2) & v(3)  \\
+v(3) & v(1) & v(2)  \\
+v(2) & v(3) & v(1)  \end{array} \right)
+$$
+
+\item So that $\psi_{+}^{-1} (\psi_{+}(v_{\sigma_{1}}) \ldots \psi_{+}(v_{\sigma_{k}})) = v_{\sigma_{1}} \circledast \ldots \circledast v_{\sigma_{k}}$
+
+\end{itemize}
+\end{frame}
+
+
+%\begin{frame}{Foundations: VSM: Permutation-based Approaches}
+%\begin{itemize}
+%\item Sahlgren et al 
+%\end{itemize}
+%\end{frame}
+
+%\begin{frame}{Foundations: Symbolic Approaches: Group Theory}
+%\begin{itemize}
+%\item
+%\end{itemize}
+%\end{frame}
+
+
+
+\begin{frame}{Foundations: Symbolic Approaches: Regular Language}
+\begin{itemize}
+\item CMSM can simulate regular languages
+\item Build transition matrices for finite state automaton
+\item For every input token $\sigma$ build $[[\sigma]] = M$ with
+$$ M(i,j) = \left\{\begin{array}{cl} 1, & \mbox{if } (q_{i},\sigma,q_{j}) \in \Delta) \\ 0, & \mbox{otherwise} \end{array}\right.  $$
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Foundations: Symbolic Approaches: Regular Language}
+\begin{itemize}
+\item Words: $w = \sigma_{1} \ldots \sigma{k} \in \Sigma^{*}$ 
+\item Represents words as state transition matrix:
+$$ M_{w} = [[\sigma_{1}]]\ldots [[\sigma_{k}]]  $$
+\item Start and end state vectors:
+$$ v_{I}(i) = \left\{\begin{array}{cl} 1, & \mbox{if } q_{i} \in Q_{I} \\ 0, & \mbox{otherwise} \end{array}\right. $$ 
+$$ v_{F}(i) = \left\{\begin{array}{cl} 1, & \mbox{if } q_{i} \in Q_{F}) \\ 0, & \mbox{otherwise} \end{array}\right. $$
+\item Word is accepted if
+$$ v_{I}M_{w}v_{F}^{T} \ge 1 $$
+\end{itemize}
+\end{frame}
+
+
 
 
 \begin{frame}{Foundations}
