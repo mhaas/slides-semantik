@@ -10,6 +10,9 @@
 \title{Rudolph \& Giesbrecht: Compositional Matrix-Space Models of Language}
 \subtitle{Seminar: Distributionelle Semantik jenseits der Wortbedeutung (Matthias Hartung)}
 \date{24-06-2013}
+\newcommand{\tuple}[1]{\ensuremath{\left \langle #1 \right \rangle }}
+\newcommand{\setof}[1]{\ensuremath{\left \{ #1 \right \}}}
+
 \begin{document}
 
 
@@ -19,14 +22,16 @@
 
 \begin{frame}{Overview}
 \begin{itemize}
-\item Previous approaches % incl problems
+%\item Previous approaches % incl problems
 \item Idea \& Approach % incl motivation, or see prev?
 \item Foundations
 \begin{itemize}
     \item Plausibility % grounding in other theories
     \item Encoding VSM % + examples
     \item Encoding symbolic approaches
+    \item Combination of different approaches
 \end{itemize}
+%\item Recap CMSM
 \item A first implementation: Sentiment Analysis
 \begin{itemize}
     \item Algorithm % cursory
@@ -37,12 +42,19 @@
 \end{itemize}
 \end{frame}
 
-
-\begin{frame}{Foundations} % + justification?
+\begin{frame}{Idea \& Approach}
 \begin{itemize}
-\item Plausibility in various systems
+\item
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Foundations}
+\begin{itemize}
+\item \textbf{Plausibility in various systems}
 \item CMSMs can represent various VSM
 \item CMSMs can represent formal languages
+\item Different representations can be combined
 \end{itemize}
 \end{frame}
 
@@ -71,6 +83,16 @@
 \item $\to$ Anaphora resolution
 \end{itemize}
 \end{frame}
+
+\begin{frame}{Foundations}
+\begin{itemize}
+\item Plausibility in various systems
+\item \textbf{CMSMs can represent various VSM}
+\item CMSMs can represent formal languages
+\item Different representations can be combined
+\end{itemize}
+\end{frame}
+
 
 \begin{frame}{Foundations: Vector Space Models}
 CMSM encode Vector Space models
@@ -159,6 +181,9 @@ v_{\sigma}(1) & 0 & 0 & 0 \\
 \end{itemize}
 \end{frame}
 
+
+
+
 \begin{frame}{Foundations: VSM: Circular Convolution Product}
 \begin{itemize}
 \item CMSM can simulate Circular Convolution Product 
@@ -193,6 +218,15 @@ $$
 %\end{frame}
 
 
+\begin{frame}{Foundations}
+\begin{itemize}
+\item Plausibility in various systems
+\item CMSMs can represent various VSM
+\item \textbf{CMSMs can represent formal languages}
+\item Different representations can be combined
+\end{itemize}
+\end{frame}
+
 
 \begin{frame}{Foundations: Symbolic Approaches: Regular Language}
 \begin{itemize}
@@ -219,20 +253,188 @@ $$ v_{I}M_{w}v_{F}^{T} \ge 1 $$
 
 
 
-
-\begin{frame}{Foundations}
+\begin{frame}{Foundations: Symbolic Approaches: Matrix Grammars}
 \begin{itemize}
-\item
+\item Matrix grammar $M := \tuple{[[\mathord{\cdot}]], AC}$
+\item $[[\mathord{\cdot}]]$: mapping from $\Sigma$ to $n \times n $ matrix
+\item $AC$: Acceptance conditions $ \setof{ \tuple{v'_{1}, v_{1}, r_{1}}, \ldots, \tuple{v'_{m}, v_{m}, r_{m}} }$
+\item $v'_{1}, v_{1},\ldots,v'_{m}, v_{m} \in \mathbb{R}^{n}$
+\item $r_{1}, \ldots, r_{2} \in \mathbb{R}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Foundations: Symbolic Approaches: Matrix Grammars: Acceptance}
+\begin{itemize}
+\item $AC$: Acceptance conditions $ \setof{ \tuple{v'_{1}, v_{1}, r_{1}}, \ldots, \tuple{v'_{m}, v_{m}, r_{m}} }$
+\item Word $\sigma_{1},\ldots,\sigma{k}$ in $L(M)$ if for all $i \in [1,\ldots,m]$ 
+$$v'_{i}[[\sigma_{1}]] \ldots [[\sigma_{k}]] v_{i}^{'T} \ge r_{i}$$
 \end{itemize}
 \end{frame}
 
 
-%\begin{frame}{Perceptual Systems Theory: Amodal theories}
-%\begin{figure}
-%\includegraphics[scale=0.8]{barsalou_figure_2_amodal_symbol_systems.png}
-%\caption{Basic idea of Amodal theories, \cite{barsalou}}
-%\end{figure}
-%\end{frame}
+\begin{frame}{Foundations: Symbolic Approaches: Matrix Grammars: Properties}
+\begin{itemize}
+\item Matricible languages
+\begin{itemize}
+    \item palindrome language
+    \item $\setof{ a^{m} b ^{m} c^{m}  }$ (non-context-free)
+\end{itemize}
+\item All languages characterized by set of linear equations on letter count
+\item Intersection of matricible language
+\item But: (likely) not all context-free languages matricible
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Foundations}
+\begin{itemize}
+\item Plausibility in various systems
+\item CMSMs can represent various VSM
+\item CMSMs can represent formal languages
+\item \textbf{Different representations can be combined}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Foundations: Combination of different approaches}
+\begin{itemize}
+\item Combine two models by combining their mapping matrices
+\item First model $[[\sigma_{1}]]$, second model $([\sigma_{1}])$
+\end{itemize}
+
+$$  \{[\sigma_{i}]\} =
+\left( \begin{array}{cccc|cccc}
+ &  &  &  & 0 & 0 & 0 & 0   \\
+ &  &  &  & 0 & 0 & 0 & 0   \\
+ & [[\sigma_{1}]]  &  &  & 0 & 0 & 0 & 0   \\
+ &  &  &  & 0 & 0 & 0 & 0   \\ \hline
+0 & 0 & 0 & 0 &  &  &  &    \\
+0 & 0 & 0 & 0 &  &  &  &    \\
+0 & 0 & 0 & 0 &  &  & ([\sigma_{1}])  &    \\
+0 & 0 & 0 & 0 &  &  &  &    \\
+\end{array} \right) $$
+
+
+\end{frame}
+
+
+\begin{frame}{Recap CMSM}
+\begin{itemize}
+\item Matrix-based model of compositionality
+\item Algebraic, neurological and psychological plausbility
+\item Very expressive
+\item But: how to obtain CMSMs?
+\item But: how well does model actually perform?
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{CMSM for Sentiment Analysis}
+\begin{itemize}
+\item A first implementation proposed by Yessenalina \&  Cardie (2011)
+%\item Combine adverb "very" with positive polar adjective "good"
+\item "very good" $\to$ increased positive polarity
+\item "not good", "not perfect" $\to$ dampening
+\item "prevent cancer"
+\item Typical approaches: bag-of-words
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{CMSM for Sentiment Analysis: idea}
+\begin{itemize}
+\item "very good"
+\item Typical approaches: bag-of-words
+\item Here: Model  words as matrices
+\item Combine word matrices using matrix multiplication
+\end{itemize}
+\end{frame}
+
+\begin{frame}{CMSM for Sentiment Analysis: Approach}
+\begin{itemize}
+\item Sentiment represented on five-point ordinal scale
+\item Ordered Logistic Regression framework
+\item Baseline: bag-of-words
+\begin{itemize}
+    \item OLogReg model learns one weight per word
+\end{itemize}
+\item Bag-of-words OLogReg is convex, therefore we will find global optimum
+\item Matrix-Space OLogReg is non-convex, needs good initialisation
+\item Initizalize Matrix-Space OLogReg with result of bag-of-words OLogReg
+ 
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{CMSM for Sentiment Analysis: Eval}
+\begin{itemize}
+\item Evaluation data: Multi-Perspective Question Answering corpus \footnote{MPQA, Wiebe et al, 2005}
+\item 535 newswire documents annotated with phrase-level subjectivity and intensity
+\item Training: 10-fold cross validation on 8022 lemmatized phrases
+\item Methods:
+\begin{itemize}
+    \item PRank
+    \item Bag-of-words OLogReg
+    \item Matrix-Space OLogReg+RandInit
+    \item Matrix-Space OLogReg+BowInit
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{CMSM for Sentiment Analysis: Methods}
+\begin{itemize}
+\item PRank
+\item Bag-of-words OLogReg
+\item Matrix-Space OLogReg+RandInit
+\item Matrix-Space OLogReg+BowInit
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{CMSM for Sentiment Analysis: Eval Results}
+
+\begin{figure}
+\includegraphics[width=\textwidth]{cmsm_for_se_table2.png}
+\caption{Yessenalina \&  Cardie (2011)}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}{CMSM for Sentiment Analysis: Eval Results}
+\begin{figure}
+\includegraphics[scale=0.45]{cmsm_for_se_table3.png}
+\caption{Yessenalina \&  Cardie (2011)}
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}{Recap}
+\begin{itemize}
+\item Matrix-based model of compositionality
+\item Algebraic, neurological and psychological plausbility
+\item Very expressive
+\item First implementation available
+    \begin{itemize}
+    \item Non-Convex learning scheme
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Discussion}
+\begin{itemize}
+\item Is non-convex learning scheme viable?
+\item Is performance of first implementation convincing?
+\item Composition order? Negation scope? \cite{cmsmse} 
+\item What about vector \textbf{multiplication}?
+\item Sentiment Analysis: what is state of the art for specific task?
+\end{itemize}
+\end{frame}
+
 
 \begin{frame}[allowframebreaks]{References}
 \begin{thebibliography}{-}
@@ -242,3 +444,4 @@ $$ v_{I}M_{w}v_{F}^{T} \ge 1 $$
 \end{thebibliography}
 \end{frame}
 \end{document}
+
