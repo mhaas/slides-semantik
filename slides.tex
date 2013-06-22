@@ -44,7 +44,24 @@
 
 \begin{frame}{Idea \& Approach}
 \begin{itemize}
-\item
+\item Previous work on compositionality
+    \begin{itemize}
+    \item Operations between vectors, such as additions
+    \item Tensor-Produkt between vectors, yielding matrices % resulting in n-dimensional matrices%
+    \item Verbs as matrixes, nouns as vectors
+\end{itemize}
+\item Now: everything is a quadratic matrix, thus a linear mapping
+\item Now: composition operation is matrix product
+\end{itemize}
+$\to$ VSM good enough for token meaning, but CMSM needed for composition
+\end{frame}
+
+
+\begin{frame}{Idea \& Approach}
+\begin{itemize}
+\item Mapping $[[\cdot]]$: maps tokens into semantical space $ \mathbb{S}=\mathbb{R}^{n \times n} $
+\item Mapping chosen so that composition operation can be matrix multiplication 
+
 \end{itemize}
 \end{frame}
 
@@ -62,7 +79,9 @@
 \begin{itemize}
 \item Traditional VSM (e.g. Vector Mixture (Lapata, Mitchell, 2010??) 
  use associate and commutative operators
-\item $\to$ Commutativity ignores word order
+\end{itemize}
+$\to$ Commutativity ignores word order
+\begin{itemize}
 \item Matrix multiplication is \textbf{non-commutative}
 \end{itemize}
 \end{frame}
@@ -71,7 +90,9 @@
 \begin{itemize}
 \item Mental state: vector of neuron excitation values
 \item Word as stimulus transforms mental state
-\item $\to$ word is a function mapping mental states to mental states
+\end{itemize}
+$\to$ word is a function mapping mental states to mental states
+\begin{itemize}
 \item Arbitrary length transformations realised through matrix multiplication
 \end{itemize}
 \end{frame}
@@ -80,8 +101,8 @@
 \begin{itemize}
 \item Working memory: represented by neural state vector %TODO: look up working memory - baddeley, 2003%
 \item Matrices support memory operations: storage, deletion, copy
-\item $\to$ Anaphora resolution
 \end{itemize}
+$to$ Anaphora resolution
 \end{frame}
 
 \begin{frame}{Foundations}
@@ -331,6 +352,29 @@ $$  \{[\sigma_{i}]\} =
 \end{frame}
 
 
+\begin{frame}{Overview}
+\begin{itemize}
+%\item Previous approaches % incl problems
+\item Idea \& Approach % incl motivation, or see prev?
+\item Foundations
+\begin{itemize}
+    \item Plausibility % grounding in other theories
+    \item Encoding VSM % + examples
+    \item Encoding symbolic approaches
+    \item Combination of different approaches
+\end{itemize}
+%\item Recap CMSM
+\item \textbf{A first implementation: Sentiment Analysis}
+\begin{itemize}
+    \item Algorithm % cursory
+    \item Results % cursory - was baseline sensible? what is state of the art?
+\end{itemize}
+\item Recap \& Discussion
+\end{itemize}
+\end{frame}
+
+
+
 \begin{frame}{CMSM for Sentiment Analysis}
 \begin{itemize}
 \item A first implementation proposed by Yessenalina \&  Cardie (2011)
@@ -343,7 +387,7 @@ $$  \{[\sigma_{i}]\} =
 \end{frame}
 
 
-\begin{frame}{CMSM for Sentiment Analysis: idea}
+\begin{frame}{CMSM for Sentiment Analysis: Idea}
 \begin{itemize}
 \item "very good"
 \item Typical approaches: bag-of-words
@@ -430,7 +474,7 @@ $$  \{[\sigma_{i}]\} =
 \item Is non-convex learning scheme viable?
 \item Is performance of first implementation convincing?
 \item Composition order? Negation scope? \cite{cmsmse} 
-\item What about vector \textbf{multiplication}?
+\item What about vector-matrix \textbf{multiplication}?
 \item Sentiment Analysis: what is state of the art for specific task?
 \end{itemize}
 \end{frame}
