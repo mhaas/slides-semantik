@@ -47,10 +47,10 @@
 \item Previous work on compositionality
     \begin{itemize}
     \item Operations between vectors, such as additions
-    \item Tensor-Produkt between vectors, yielding matrices % resulting in n-dimensional matrices%
-    \item Verbs as matrixes, nouns as vectors
+    \item Cross product between vectors, yielding matrices % resulting in n-dimensional matrices%
+    \item Verbs as matrices, nouns as vectors
 \end{itemize}
-\item Now: everything is a quadratic matrix, thus a linear mapping
+\item Now: every word is a quadratic matrix, thus a linear mapping
 \item Now: composition operation is matrix product
 \end{itemize}
 $\to$ VSM good enough for token meaning, but CMSM needed for composition
@@ -61,7 +61,6 @@ $\to$ VSM good enough for token meaning, but CMSM needed for composition
 \begin{itemize}
 \item Mapping $[[\cdot]]$: maps tokens into semantical space $ \mathbb{S}=\mathbb{R}^{n \times n} $
 \item Mapping chosen so that composition operation can be matrix multiplication 
-
 \end{itemize}
 \end{frame}
 
@@ -77,8 +76,7 @@ $\to$ VSM good enough for token meaning, but CMSM needed for composition
 
 \begin{frame}{Foundations: Plausibility: Algebraic Properties}
 \begin{itemize}
-\item Traditional VSM (e.g. Vector Mixture (Lapata, Mitchell, 2010??) 
- use associate and commutative operators
+\item Traditional VSM (e.g. Vector Mixture) use associate and commutative operators
 \end{itemize}
 $\to$ Commutativity ignores word order
 \begin{itemize}
@@ -91,7 +89,7 @@ $\to$ Commutativity ignores word order
 \item Mental state: vector of neuron excitation values
 \item Word as stimulus transforms mental state
 \end{itemize}
-$\to$ word is a function mapping mental states to mental states
+$\to$ Word is a function mapping mental states to mental states
 \begin{itemize}
 \item Arbitrary length transformations realised through matrix multiplication
 \end{itemize}
@@ -102,7 +100,7 @@ $\to$ word is a function mapping mental states to mental states
 \item Working memory: represented by neural state vector %TODO: look up working memory - baddeley, 2003%
 \item Matrices support memory operations: storage, deletion, copy
 \end{itemize}
-$to$ Anaphora resolution
+$\to$ Anaphora resolution
 \end{frame}
 
 \begin{frame}{Foundations}
@@ -119,7 +117,7 @@ $to$ Anaphora resolution
 CMSM encode Vector Space models
 \begin{itemize}
 \item Represent vector composition operation $\bowtie$ as matrix multiplication between mapped vectors
-\item Map vectors into matrix space: $\psi_{\bowtie} \mathbb{R}^{n} \to \mathbb{R}^{n'\times n'} $
+\item Map vectors into matrix space: $\psi_{\bowtie}: \mathbb{R}^{n} \to \mathbb{R}^{n'\times n'} $
 $$ v_{1} \bowtie \ldots \bowtie v_{k} = \psi_{\bowtie}^{-1}(\psi_{\bowtie}(v_{1}) \ldots \psi_{\bowtie}(v_{k}) )$$
 \end{itemize}
 \end{frame}
@@ -146,14 +144,6 @@ $$  \psi_{+}(v_{\sigma}) =
 \item $v_{\sigma_{1}} = (2,5)$, $v_{\sigma_{2}} = (3,1)$
 \item Plug into $v_{w} = \sum_{i=1}^{k}v_{\sigma_{i}}$
 \item $v_{w} = (2,5)+(3,1) = (5,6)$
-\item $\psi_{+}(v_{1}) = \left( \begin{array}{cc|c}
-1 & 0 & 0 \\
-0 & 1 & 0 \\
-2 & 5 & 1 \end{array} \right) $
-\item  $\psi_{+}(v_{2}) = \left( \begin{array}{cc|c}
-1 & 0 & 0 \\
-0 & 1 & 0 \\
-3 & 1 & 1 \end{array} \right) $
 \end{itemize}
 \end{frame}
 
@@ -266,7 +256,7 @@ $$ M(i,j) = \left\{\begin{array}{cl} 1, & \mbox{if } (q_{i},\sigma,q_{j}) \in \D
 $$ M_{w} = [[\sigma_{1}]]\ldots [[\sigma_{k}]]  $$
 \item Start and end state vectors:
 $$ v_{I}(i) = \left\{\begin{array}{cl} 1, & \mbox{if } q_{i} \in Q_{I} \\ 0, & \mbox{otherwise} \end{array}\right. $$ 
-$$ v_{F}(i) = \left\{\begin{array}{cl} 1, & \mbox{if } q_{i} \in Q_{F}) \\ 0, & \mbox{otherwise} \end{array}\right. $$
+$$ v_{F}(i) = \left\{\begin{array}{cl} 1, & \mbox{if } q_{i} \in Q_{F} \\ 0, & \mbox{otherwise} \end{array}\right. $$
 \item Word is accepted if
 $$ v_{I}M_{w}v_{F}^{T} \ge 1 $$
 \end{itemize}
@@ -389,25 +379,22 @@ $$  \{[\sigma_{i}]\} =
 
 \begin{frame}{CMSM for Sentiment Analysis: Idea}
 \begin{itemize}
-\item "very good"
-\item Typical approaches: bag-of-words
-\item Here: Model  words as matrices
+\item Model words as matrices
 \item Combine word matrices using matrix multiplication
 \end{itemize}
+$\ne$ bag of words
 \end{frame}
 
 \begin{frame}{CMSM for Sentiment Analysis: Approach}
 \begin{itemize}
 \item Sentiment represented on five-point ordinal scale
-\item Ordered Logistic Regression framework
 \item Baseline: bag-of-words
 \begin{itemize}
-    \item OLogReg model learns one weight per word
+    \item Ordered Logistic Regression framework model learns one weight per word
 \end{itemize}
 \item Bag-of-words OLogReg is convex, therefore we will find global optimum
 \item Matrix-Space OLogReg is non-convex, needs good initialisation
 \item Initizalize Matrix-Space OLogReg with result of bag-of-words OLogReg
- 
 \end{itemize}
 \end{frame}
 
@@ -416,14 +403,7 @@ $$  \{[\sigma_{i}]\} =
 \begin{itemize}
 \item Evaluation data: Multi-Perspective Question Answering corpus \footnote{MPQA, Wiebe et al, 2005}
 \item 535 newswire documents annotated with phrase-level subjectivity and intensity
-\item Training: 10-fold cross validation on 8022 lemmatized phrases
-\item Methods:
-\begin{itemize}
-    \item PRank
-    \item Bag-of-words OLogReg
-    \item Matrix-Space OLogReg+RandInit
-    \item Matrix-Space OLogReg+BowInit
-\end{itemize}
+\item 10-fold cross validation on 8022 lemmatized phrases
 \end{itemize}
 \end{frame}
 
