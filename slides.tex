@@ -242,7 +242,7 @@ $$
 \begin{frame}{Foundations: Symbolic Approaches: Regular Language}
 \begin{itemize}
 \item CMSM can simulate regular languages
-\item Build transition matrices for finite state automaton
+\item Build transition matrices for finite state machines
 \item For every input token $\sigma$ build $[[\sigma]] = M$ with
 $$ M(i,j) = \left\{\begin{array}{cl} 1, & \mbox{if } (q_{i},\sigma,q_{j}) \in \Delta) \\ 0, & \mbox{otherwise} \end{array}\right.  $$
 \end{itemize}
@@ -251,10 +251,10 @@ $$ M(i,j) = \left\{\begin{array}{cl} 1, & \mbox{if } (q_{i},\sigma,q_{j}) \in \D
 
 \begin{frame}{Foundations: Symbolic Approaches: Regular Language}
 \begin{itemize}
-\item Words: $w = \sigma_{1} \ldots \sigma{k} \in \Sigma^{*}$ 
+\item Words: $w = \sigma_{1} \ldots \sigma_{k} \in \Sigma^{*}$ 
 \item Represents words as state transition matrix:
 $$ M_{w} = [[\sigma_{1}]]\ldots [[\sigma_{k}]]  $$
-\item Start and end state vectors:
+\item Start and final state vectors:
 $$ v_{I}(i) = \left\{\begin{array}{cl} 1, & \mbox{if } q_{i} \in Q_{I} \\ 0, & \mbox{otherwise} \end{array}\right. $$ 
 $$ v_{F}(i) = \left\{\begin{array}{cl} 1, & \mbox{if } q_{i} \in Q_{F} \\ 0, & \mbox{otherwise} \end{array}\right. $$
 \item Word is accepted if
@@ -274,22 +274,20 @@ $$ v_{I}M_{w}v_{F}^{T} \ge 1 $$
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Foundations: Symbolic Approaches: Matrix Grammars: Acceptance}
+\begin{frame}{Matrix Grammars: Acceptance}
 \begin{itemize}
 \item $AC$: Acceptance conditions $ \setof{ \tuple{v'_{1}, v_{1}, r_{1}}, \ldots, \tuple{v'_{m}, v_{m}, r_{m}} }$
-\item Word $\sigma_{1},\ldots,\sigma{k}$ in $L(M)$ if for all $i \in [1,\ldots,m]$ 
+\item Word $\sigma_{1},\ldots,\sigma_{k}$ in $L(M)$ if for all $i \in [1,\ldots,m]$ 
 $$v'_{i}[[\sigma_{1}]] \ldots [[\sigma_{k}]] v_{i}^{'T} \ge r_{i}$$
 \end{itemize}
 \end{frame}
 
 
-\begin{frame}{Foundations: Symbolic Approaches: Matrix Grammars: Properties}
+\begin{frame}{Matrix Grammars: Matricible Languages}
+Matricible languages include
 \begin{itemize}
-\item Matricible languages
-\begin{itemize}
-    \item palindrome language
-    \item $\setof{ a^{m} b ^{m} c^{m}  }$ (non-context-free)
-\end{itemize}
+\item Palindrome language
+\item $\setof{ a^{m} b ^{m} c^{m}  }$ (non-context-free)
 \item All languages characterized by set of linear equations on letter count
 \item Intersection of matricible language
 \item But: (likely) not all context-free languages matricible
